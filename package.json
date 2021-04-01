@@ -1,0 +1,31 @@
+{
+  "name": "@involves/http-request-validation-lib",
+  "version": "1.0.0",
+  "description": "Tool to validate your http requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha 'test/**/*.js' --recursive --timeout 5000 --exit",
+    "coverage": "nyc npm run test"
+  },
+  "keywords": [
+    "request",
+    "validation",
+    "joi"
+  ],
+  "author": "Morelli",
+  "license": "ISC",
+  "dependencies": {
+    "joi": "^17.4.0",
+    "mongodb": "^3.6.5"
+  },
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-mocha": "^8.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "mocha": "^8.3.2",
+    "nyc": "^15.1.0"
+  }
+}
