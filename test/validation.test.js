@@ -107,6 +107,12 @@ describe('Validation tool test suite', function () {
       assert.equal(errors[0], INVALID_KEY)
     })
 
+    it('should return invalid error when given random string', function () {
+      const input = 'Random string here'
+      Validation.validate(input, ERROR_MSGS, errors).isNumber()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
     it('should return invalid error when given boolean', function () {
       const input = true
       Validation.validate(input, ERROR_MSGS, errors).isNumber()
