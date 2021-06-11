@@ -42,7 +42,7 @@ class Validation {
 
     if (isNullOrUndefined) return this
 
-    if (typeof this.value === 'number' && !schema.validate(this.value).error) return this
+    if (typeof this.value === 'number' && !isNaN(this.value) && !schema.validate(this.value).error) return this
 
     this.errors.push(this.innerErrorMessage.invalid)
 
