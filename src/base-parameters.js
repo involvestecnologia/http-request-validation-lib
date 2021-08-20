@@ -4,20 +4,21 @@ const constants = require('./constants')
 const Validation = require('./validation')
 
 class BaseParameters {
-  static new (req) {
-    this.requestId = req?.headers?.[constants.headers.requestId]
-    this.schema = req?.headers?.[constants.headers.schema]
-    this.errors = []
+  static new (parent, req) {
+    parent.requestId = req?.headers?.[constants.headers.requestId]
+    parent.schema = req?.headers?.[constants.headers.schema]
+    parent.errors = []
+    this.parent = parent
     return this
   }
 
   static validate () {
     Validation
-      .validate(this.requestId, constants.errors.requestId, this.errors)
+      .validate(this.parent.requestId, constants.errors.requestId, this.parent.errors)
       .isString(36, 36)
 
     Validation
-      .validate(this.schema, constants.errors.schema, this.errors)
+      .validate(this.parent.schema, constants.errors.schema, this.parent.errors)
       .isString()
   }
 }
