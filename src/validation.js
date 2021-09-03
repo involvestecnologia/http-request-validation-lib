@@ -18,16 +18,17 @@ class Validation {
   }
 
   static isString (minLegth, maxLength) {
-    let schema
+    let schema = {}
 
-    if (minLegth === undefined && maxLength === undefined) {
+    if (typeof minLegth === 'undefined' && typeof maxLength === 'undefined') {
       schema = Joi.string().allow('')
+    } else if (minLegth === 0) {
+      schema = Joi.string().allow('')
+        .min(minLegth)
+        .max(maxLength)
     } else {
-      if (minLegth === 0) {
-        schema = Joi.string().allow('').min(minLegth).max(maxLength)
-      } else {
-        schema = Joi.string().min(minLegth).max(maxLength)
-      }
+      schema = Joi.string().min(minLegth)
+        .max(maxLength)
     }
 
     _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage)
@@ -104,9 +105,9 @@ class Validation {
   }
 }
 
-const _isNullOrUndefined = (value) => value === null || value === undefined
+const _isNullOrUndefined = (value) => value === null || typeof value === 'undefined'
 
-const _isEmptyObject = object => !Object.getOwnPropertySymbols(object).length && !Object.getOwnPropertyNames(object).length
+const _isEmptyObject = (object) => !Object.getOwnPropertySymbols(object).length && !Object.getOwnPropertyNames(object).length
 
 const _verifyNullOrUndefined = (optional, value, errors, innerErrorMessage) => {
   const isNullOrUndefined = _isNullOrUndefined(value)

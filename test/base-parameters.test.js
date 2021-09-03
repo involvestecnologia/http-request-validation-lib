@@ -4,7 +4,8 @@ const constants = require('../src/constants')
 const { BaseParameters } = require('../index')
 
 describe('BaseParameters Unit Tests', function () {
-  let parent, req
+  let parent = {}
+  let req = {}
 
   beforeEach(function () {
     parent = {}
@@ -20,7 +21,7 @@ describe('BaseParameters Unit Tests', function () {
     const expectedErrors = ['REQUEST_ID_IS_REQUIRED', 'SCHEMA_IS_REQUIRED']
 
     it('request is undefined', function () {
-      const parameters = BaseParameters.new(parent, undefined)
+      const parameters = BaseParameters.new(parent)
       parameters.validate()
 
       assert.deepEqual(parent.errors, expectedErrors)

@@ -1,4 +1,3 @@
-'use strict'
 
 const constants = require('./constants')
 const Validation = require('./validation')

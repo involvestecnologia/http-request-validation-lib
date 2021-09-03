@@ -1,19 +1,36 @@
 {
     "env": {
-        "commonjs": true,
-        "es2021": true,
         "node": true
     },
     "plugins": [
-        "mocha"
+        "security",
+        "sonarjs"
     ],
     "extends": [
+        "eslint:all",
         "standard",
-        "plugin:mocha/recommended"
+        "plugin:security/recommended",
+        "plugin:sonarjs/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": 12
     },
     "rules": {
-    }
+        "array-element-newline": "off",
+        "default-param-last": "off",
+        "function-call-argument-newline": "off",
+        "function-paren-newline": "off",
+        "lines-around-comment": "off",
+        "max-len": "off",
+        "max-lines": "off",
+        "max-lines-per-function": "off",
+        "max-params": "off",
+        "max-statements": "off",
+        "no-invalid-this": "off",
+        "no-undefined": "off",
+        "no-underscore-dangle": "off",
+        "no-magic-numbers": "off",
+        "security/detect-non-literal-fs-filename": "off"
+    },
+    "noInlineConfig": true
 }
