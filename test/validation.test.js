@@ -321,6 +321,76 @@ describe('Validation tool test suite', function () {
     })
   })
 
+  describe('Email', function () {
+    it('should not return errors when given an email', function () {
+      const input = 'foo@bar.com'
+      Validation.validate(input, ERROR_MSGS, errors).isEmail()
+      assert.equal(errors.length, 0)
+    })
+
+    it('should return invalid error when given random string', function () {
+      const input = 'foo bar'
+      Validation.validate(input, ERROR_MSGS, errors).isEmail()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenEmptyString, function () {
+      const input = ''
+      Validation.validate(input, ERROR_MSGS, errors).isEmail()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnMissingErrorWhenGivenNull, function () {
+      const input = null
+      Validation.validate(input, ERROR_MSGS, errors).isEmail()
+      assert.equal(errors[0], MISSING_KEY)
+    })
+
+    it(shouldReturnMissingErrorWhenGivenUndefined, function () {
+      const input = undefined
+      Validation.validate(input, ERROR_MSGS, errors).isEmail()
+      assert.equal(errors[0], MISSING_KEY)
+    })
+  })
+
+  describe('UUID', function () {
+    it('should not return errors when given an UUID v1', function () {
+      const input = '647877ca-1092-11ec-82a8-0242ac130003'
+      Validation.validate(input, ERROR_MSGS, errors).isUUID()
+      assert.equal(errors.length, 0)
+    })
+
+    it('should not return errors when given an UUID v4', function () {
+      const input = 'c897926b-237a-4cf0-897e-162008e58ab5'
+      Validation.validate(input, ERROR_MSGS, errors).isUUID()
+      assert.equal(errors.length, 0)
+    })
+
+    it('should return invalid error when given random string', function () {
+      const input = 'foo bar'
+      Validation.validate(input, ERROR_MSGS, errors).isUUID()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenEmptyString, function () {
+      const input = ''
+      Validation.validate(input, ERROR_MSGS, errors).isUUID()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnMissingErrorWhenGivenNull, function () {
+      const input = null
+      Validation.validate(input, ERROR_MSGS, errors).isUUID()
+      assert.equal(errors[0], MISSING_KEY)
+    })
+
+    it(shouldReturnMissingErrorWhenGivenUndefined, function () {
+      const input = undefined
+      Validation.validate(input, ERROR_MSGS, errors).isUUID()
+      assert.equal(errors[0], MISSING_KEY)
+    })
+  })
+
   describe('Custom', function () {
     const foo = (bar) => bar % 2 === 0
 

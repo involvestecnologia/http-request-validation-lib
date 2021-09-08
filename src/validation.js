@@ -90,6 +90,27 @@ class Validation {
     return this
   }
 
+  static isEmail () {
+    const schema = Joi.string().email()
+
+    _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage)
+
+    return this
+  }
+
+  static isUUID () {
+    const schema = Joi.string().guid({
+      version: [
+        'uuidv1',
+        'uuidv4'
+      ]
+    })
+
+    _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage)
+
+    return this
+  }
+
   static custom (func) {
     const isNullOrUndefined = _verifyNullOrUndefined(this.optional, this.value, this.errors, this.innerErrorMessage)
 

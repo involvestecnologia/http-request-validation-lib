@@ -22,10 +22,6 @@ test:
 	docker build --target=test --tag=$(PROJECT_NAME) .
 	docker run --name=$(PROJECT_NAME) $(PROJECT_NAME)
 
-.PHONY: clean
-clean:
-	docker-compose down
-
 .PHONY: coverage
 coverage: test
 	@rm -rf coverage
