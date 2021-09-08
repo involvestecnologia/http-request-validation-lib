@@ -12,6 +12,7 @@ const ERROR_MSGS = {
 }
 
 const shouldReturnInvalidErrorWhenGivenEmptyString = 'should return invalid error when given empty string'
+const shouldReturnInvalidErrorWhenGivenRandomString = 'should return invalid error when given random string'
 const shouldReturnInvalidErrorWhenGivenNumber = 'should return invalid error when given number'
 const shouldReturnInvalidErrorWhenGivenObject = 'should return invalid error when given object'
 const shouldReturnInvalidErrorWhenGivenString = 'should return invalid error when given string'
@@ -114,8 +115,8 @@ describe('Validation tool test suite', function () {
       assert.equal(errors[0], INVALID_KEY)
     })
 
-    it('should return invalid error when given random string', function () {
-      const input = 'Random string here'
+    it(shouldReturnInvalidErrorWhenGivenRandomString, function () {
+      const input = 'foo bar'
       Validation.validate(input, ERROR_MSGS, errors).isNumber()
       assert.equal(errors[0], INVALID_KEY)
     })
@@ -328,7 +329,7 @@ describe('Validation tool test suite', function () {
       assert.equal(errors.length, 0)
     })
 
-    it('should return invalid error when given random string', function () {
+    it(shouldReturnInvalidErrorWhenGivenRandomString, function () {
       const input = 'foo bar'
       Validation.validate(input, ERROR_MSGS, errors).isEmail()
       assert.equal(errors[0], INVALID_KEY)
@@ -366,7 +367,7 @@ describe('Validation tool test suite', function () {
       assert.equal(errors.length, 0)
     })
 
-    it('should return invalid error when given random string', function () {
+    it(shouldReturnInvalidErrorWhenGivenRandomString, function () {
       const input = 'foo bar'
       Validation.validate(input, ERROR_MSGS, errors).isUUID()
       assert.equal(errors[0], INVALID_KEY)
