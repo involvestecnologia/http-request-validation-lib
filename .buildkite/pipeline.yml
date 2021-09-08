@@ -50,11 +50,9 @@ steps:
 
   - label: "Tests"
     key: "test"
-    env:
-      SCRIPT_NAME: ci_run_tests.sh
-    command:
+    command: 
       - "docker build --target=test --tag=$$BUILDKITE_BUILD_ID ."
-	    - "docker run --rm $$BUILDKITE_BUILD_ID"
+      - "docker run --rm $$BUILDKITE_BUILD_ID"
     agents:
       queue: "docker"
     if: build.source != "schedule"
