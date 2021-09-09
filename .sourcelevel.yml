@@ -1,0 +1,12 @@
+---
+styleguide: sourcelevel/linters
+engines:
+  fixme:
+    enabled: true
+  eslint:
+    enabled: true
+    channel: "eslint-7"
+  remark-lint:
+    enabled: true    
+exclude_paths:
+- test
