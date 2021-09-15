@@ -587,5 +587,27 @@ describe('Validation tool test suite', function () {
       assert.equal(errors.length, 1)
       assert.equal(errors[0], prefixError + INVALID_KEY)
     })
+
+    it('should return prefix error when is invalid string', function () {
+      const input = 1
+      const prefixError = 'prefix_error_'
+
+      Validation.validate(input, ERROR_MSGS, errors, prefixError)
+        .isString()
+
+      assert.equal(errors.length, 1)
+      assert.equal(errors[0], prefixError + INVALID_KEY)
+    })
+
+    it('should return prefix error when is required', function () {
+      const input = undefined
+      const prefixError = 'prefix_error_'
+
+      Validation.validate(input, ERROR_MSGS, errors, prefixError)
+        .isString()
+
+      assert.equal(errors.length, 1)
+      assert.equal(errors[0], prefixError + MISSING_KEY)
+    })
   })
 })
