@@ -240,6 +240,12 @@ describe('Validation tool test suite', function () {
       assert.equal(errors.length, 0)
     })
 
+    it('should return invalid error when given array', function () {
+      const input = []
+      Validation.validate(input, ERROR_MSGS, errors).isObjectNotEmpty()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
     it('should return invalid error when given empty object', function () {
       const input = {}
       Validation.validate(input, ERROR_MSGS, errors).isObjectNotEmpty()
