@@ -33,7 +33,7 @@ class Validation {
         .max(maxLength)
     }
 
-    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage)
+    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
     return this
   }
@@ -41,7 +41,7 @@ class Validation {
   static isNumber () {
     const schema = Joi.number()
 
-    const { isNullOrUndefined, valid } = _verifyNullOrUndefined(this.optional, this.value, this.errors, this.innerErrorMessage)
+    const { isNullOrUndefined, valid } = _verifyNullOrUndefined(this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
     this.valid = valid
 
@@ -58,7 +58,7 @@ class Validation {
   static isBoolean () {
     const schema = Joi.boolean().strict()
 
-    _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage)
+    _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
     return this
   }
@@ -66,20 +66,20 @@ class Validation {
   static isObject () {
     const schema = Joi.object()
 
-    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage)
+    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
     return this
   }
 
   static isObjectNotEmpty () {
-    const { isNullOrUndefined, valid } = _verifyNullOrUndefined(this.optional, this.value, this.errors, this.innerErrorMessage)
+    const { isNullOrUndefined, valid } = _verifyNullOrUndefined(this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
     this.valid = valid
 
     if (isNullOrUndefined) return this
 
     const schema = Joi.object()
-    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage)
+    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
     if (!this.valid || !_isEmptyObject(this.value)) return this
 
@@ -90,7 +90,7 @@ class Validation {
   }
 
   static isObjectId () {
-    const { isNullOrUndefined, valid } = _verifyNullOrUndefined(this.optional, this.value, this.errors, this.innerErrorMessage)
+    const { isNullOrUndefined, valid } = _verifyNullOrUndefined(this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
     this.valid = valid
 
@@ -107,7 +107,7 @@ class Validation {
   static isEmail () {
     const schema = Joi.string().email()
 
-    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage)
+    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
     return this
   }
@@ -120,7 +120,7 @@ class Validation {
       ]
     })
 
-    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage)
+    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
     return this
   }
@@ -128,7 +128,7 @@ class Validation {
   static isArray () {
     const schema = Joi.array()
 
-    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage)
+    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
     return this
   }
@@ -136,7 +136,7 @@ class Validation {
   static isArrayNotEmpty () {
     const schema = Joi.array()
 
-    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage)
+    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
     if (!this.valid || this.value.length > 0) return this
 
@@ -147,7 +147,7 @@ class Validation {
   }
 
   static custom (func) {
-    const { isNullOrUndefined, valid } = _verifyNullOrUndefined(this.optional, this.value, this.errors, this.innerErrorMessage)
+    const { isNullOrUndefined, valid } = _verifyNullOrUndefined(this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
     this.valid = valid
 
@@ -176,7 +176,7 @@ const _isNullOrUndefined = (value) => value === null || typeof value === 'undefi
 
 const _isEmptyObject = (object) => !Object.getOwnPropertySymbols(object).length && !Object.getOwnPropertyNames(object).length
 
-const _verifyNullOrUndefined = (optional, value, errors, innerErrorMessage) => {
+const _verifyNullOrUndefined = (optional, value, errors, innerErrorMessage, prefixError) => {
   const isNullOrUndefined = _isNullOrUndefined(value)
 
   if (optional && isNullOrUndefined) return { isNullOrUndefined: true, valid: true }
@@ -184,18 +184,18 @@ const _verifyNullOrUndefined = (optional, value, errors, innerErrorMessage) => {
   if (!isNullOrUndefined) return { isNullOrUndefined: false, valid: true }
 
   this.valid = false
-  errors.push(innerErrorMessage.required)
+  errors.push(prefixError + innerErrorMessage.required)
   return { isNullOrUndefined: true, valid: false }
 }
 
-const _validation = (schema, optional, value, errors, innerErrorMessage) => {
-  const { isNullOrUndefined, valid } = _verifyNullOrUndefined(optional, value, errors, innerErrorMessage)
+const _validation = (schema, optional, value, errors, innerErrorMessage, prefixError) => {
+  const { isNullOrUndefined, valid } = _verifyNullOrUndefined(optional, value, errors, innerErrorMessage, prefixError)
 
   if (isNullOrUndefined) return valid
 
   if (!schema.validate(value).error) return valid
 
-  errors.push(innerErrorMessage.invalid)
+  errors.push(prefixError + innerErrorMessage.invalid)
 
   return false
 }
