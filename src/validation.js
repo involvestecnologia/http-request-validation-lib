@@ -77,7 +77,10 @@ class Validation {
 
     if (isNullOrUndefined) return this
 
-    if (typeof this.value === 'object' && !_isEmptyObject(this.value)) return this
+    const schema = Joi.object()
+    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage)
+
+    if (!this.valid || !_isEmptyObject(this.value)) return this
 
     this.valid = false
     this.errors.push(this.innerErrorMessage.invalid)
