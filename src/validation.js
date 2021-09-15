@@ -2,12 +2,13 @@ const Joi = require('joi')
 const { ObjectID } = require('mongodb')
 
 class Validation {
-  static validate (value, innerErrorMessage, errors) {
+  static validate (value, innerErrorMessage, errors, prefixError = '') {
     this.value = value
     this.innerErrorMessage = innerErrorMessage
     this.errors = errors
     this.optional = false
     this.valid = true
+    this.prefixError = prefixError
 
     return this
   }
@@ -49,7 +50,7 @@ class Validation {
     if (typeof this.value === 'number' && !isNaN(this.value) && !schema.validate(this.value).error) return this
 
     this.valid = false
-    this.errors.push(this.innerErrorMessage.invalid)
+    this.errors.push(this.prefixError + this.innerErrorMessage.invalid)
 
     return this
   }
@@ -83,7 +84,7 @@ class Validation {
     if (!this.valid || !_isEmptyObject(this.value)) return this
 
     this.valid = false
-    this.errors.push(this.innerErrorMessage.invalid)
+    this.errors.push(this.prefixError + this.innerErrorMessage.invalid)
 
     return this
   }
@@ -98,7 +99,7 @@ class Validation {
     if (ObjectID.isValid(this.value)) return this
 
     this.valid = false
-    this.errors.push(this.innerErrorMessage.invalid)
+    this.errors.push(this.prefixError + this.innerErrorMessage.invalid)
 
     return this
   }
@@ -140,7 +141,7 @@ class Validation {
     if (!this.valid || this.value.length > 0) return this
 
     this.valid = false
-    this.errors.push(this.innerErrorMessage.invalid)
+    this.errors.push(this.prefixError + this.innerErrorMessage.invalid)
 
     return this
   }
@@ -157,7 +158,7 @@ class Validation {
     if (isValid) return this
 
     this.valid = false
-    this.errors.push(this.innerErrorMessage.invalid)
+    this.errors.push(this.prefixError + this.innerErrorMessage.invalid)
 
     return this
   }
