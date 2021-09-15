@@ -575,4 +575,17 @@ describe('Validation tool test suite', function () {
       assert.equal(errors[0], MISSING_KEY)
     })
   })
+
+  describe('Prefix Error', function () {
+    it('should return prefix error', function () {
+      const input = []
+      const prefixError = 'prefix_error_'
+
+      Validation.validate(input, ERROR_MSGS, errors, prefixError)
+        .isArrayNotEmpty()
+
+      assert.equal(errors.length, 1)
+      assert.equal(errors[0], prefixError + INVALID_KEY)
+    })
+  })
 })
