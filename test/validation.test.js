@@ -1,4 +1,5 @@
 const assert = require('assert').strict
+const sandbox = require('sinon').createSandbox()
 
 const { ObjectID } = require('mongodb')
 const { Validation } = require('../index')
@@ -24,6 +25,10 @@ describe('Validation tool test suite', function () {
 
   beforeEach(function () {
     errors = []
+  })
+
+  afterEach(function () {
+    sandbox.restore()
   })
 
   describe('String', function () {
@@ -433,6 +438,135 @@ describe('Validation tool test suite', function () {
       Validation.validate(input, ERROR_MSGS, errors).isOptional()
         .isBoolean()
       assert.equal(errors.length, 0)
+    })
+  })
+
+  describe('Is Valid', function () {
+    let func = {}
+
+    beforeEach(function () {
+      func = sandbox.spy()
+    })
+
+    it('should exec func when property is valid', function () {
+      const input = 'string-test'
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isString()
+        .isValid(func)
+
+      assert.equal(errors.length, 0)
+      assert.ok(func.calledOnce)
+    })
+
+    it('should not exec func when property is invalid', function () {
+      const input = 1
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isString()
+        .isValid(func)
+
+      assert.equal(errors.length, 1)
+      assert.ok(func.notCalled)
+    })
+  })
+
+  describe('Is Array', function () {
+    it('should not return errors when given input is valid', function () {
+      const input = []
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isArray()
+
+      assert.equal(errors.length, 0)
+    })
+
+    it('should return error when give string', function () {
+      const input = '[]'
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isArray()
+
+      assert.equal(errors.length, 1)
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it('should return error when give number', function () {
+      const input = 1
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isArray()
+
+      assert.equal(errors.length, 1)
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it('should return error when give null', function () {
+      const input = null
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isArray()
+
+      assert.equal(errors.length, 1)
+      assert.equal(errors[0], MISSING_KEY)
+    })
+
+    it('should return error when give undefined', function () {
+      const input = undefined
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isArray()
+
+      assert.equal(errors.length, 1)
+      assert.equal(errors[0], MISSING_KEY)
+    })
+  })
+
+  describe('Is Array Not Empty', function () {
+    it('should not return errors when given input is array', function () {
+      const input = [1]
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isArrayNotEmpty()
+
+      assert.equal(errors.length, 0)
+    })
+
+    it('should return error when array is empty', function () {
+      const input = []
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isArrayNotEmpty()
+
+      assert.equal(errors.length, 1)
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it('should return error when give string', function () {
+      const input = '[]'
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isArrayNotEmpty()
+
+      assert.equal(errors.length, 1)
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it('should return error when give number', function () {
+      const input = 1
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isArrayNotEmpty()
+
+      assert.equal(errors.length, 1)
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it('should return error when give null', function () {
+      const input = null
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isArrayNotEmpty()
+
+      assert.equal(errors.length, 1)
+      assert.equal(errors[0], MISSING_KEY)
+    })
+
+    it('should return error when give undefined', function () {
+      const input = undefined
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isArrayNotEmpty()
+
+      assert.equal(errors.length, 1)
+      assert.equal(errors[0], MISSING_KEY)
     })
   })
 })
