@@ -55,6 +55,14 @@ class Validation {
     return this
   }
 
+  static isDateISO () {
+    const schema = Joi.date().iso()
+
+    _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
+
+    return this
+  }
+
   static isBoolean () {
     const schema = Joi.boolean().strict()
 

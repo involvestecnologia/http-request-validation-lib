@@ -195,6 +195,56 @@ describe('Validation tool test suite', function () {
     })
   })
 
+  describe('Date Iso', function () {
+    it('should not return errors when given date ISO', function () {
+      const input = new Date().toISOString()
+      Validation.validate(input, ERROR_MSGS, errors).isDateISO()
+      assert.equal(errors.length, 0)
+    })
+
+    it('should return errors when given date', function () {
+      const input = new Date().toString()
+      Validation.validate(input, ERROR_MSGS, errors).isDateISO()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenNumber, function () {
+      const input = 1
+      Validation.validate(input, ERROR_MSGS, errors).isDateISO()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenString, function () {
+      const input = '1'
+      Validation.validate(input, ERROR_MSGS, errors).isDateISO()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenEmptyString, function () {
+      const input = ''
+      Validation.validate(input, ERROR_MSGS, errors).isDateISO()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenObject, function () {
+      const input = {}
+      Validation.validate(input, ERROR_MSGS, errors).isDateISO()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnMissingErrorWhenGivenNull, function () {
+      const input = null
+      Validation.validate(input, ERROR_MSGS, errors).isDateISO()
+      assert.equal(errors[0], MISSING_KEY)
+    })
+
+    it(shouldReturnMissingErrorWhenGivenUndefined, function () {
+      const input = undefined
+      Validation.validate(input, ERROR_MSGS, errors).isDateISO()
+      assert.equal(errors[0], MISSING_KEY)
+    })
+  })
+
   describe('Object', function () {
     it('should not return errors when given object', function () {
       const input = {}
