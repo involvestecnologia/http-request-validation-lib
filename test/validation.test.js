@@ -98,6 +98,16 @@ describe('Validation tool test suite', function () {
         Validation.validate(input, ERROR_MSGS, errors).isString(1, 2)
         assert.equal(errors[0], INVALID_KEY)
       })
+
+      it('should return invalid error when given string is not allowed', function () {
+        const input = 'null'
+        Validation.validate(input, ERROR_MSGS, errors).isString(1, 255, ['null'])
+        assert.equal(errors[0], INVALID_KEY)
+      })
+
+      it('should throw error when notAllowedValues params is not an array', function () {
+        assert.throws(() => Validation.validate('foo', ERROR_MSGS, errors).isString(1, 255, 'null'), new Error('notAllowedValues must be an array'))
+      })
     })
   })
 

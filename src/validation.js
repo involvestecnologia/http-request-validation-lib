@@ -19,7 +19,7 @@ class Validation {
     return this
   }
 
-  static isString (minLegth, maxLength) {
+  static isString (minLegth, maxLength, notAllowedValues) {
     let schema = {}
 
     if (typeof minLegth === 'undefined' && typeof maxLength === 'undefined') {
@@ -34,6 +34,14 @@ class Validation {
     }
 
     this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
+
+    if (notAllowedValues && !Array.isArray(notAllowedValues)) {
+      throw new Error('notAllowedValues must be an array')
+    }
+
+    if (Array.isArray(notAllowedValues) && notAllowedValues.indexOf(this.value) > -1) {
+      this.errors.push(this.innerErrorMessage.invalid)
+    }
 
     return this
   }
