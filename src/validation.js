@@ -47,6 +47,23 @@ class Validation {
   }
 
   static isNumber () {
+    const schema = Joi.number().integer()
+
+    const { isNullOrUndefined, valid } = _verifyNullOrUndefined(this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
+
+    this.valid = valid
+
+    if (isNullOrUndefined) return this
+
+    if (typeof this.value === 'number' && !isNaN(this.value) && !schema.validate(this.value).error) return this
+
+    this.valid = false
+    this.errors.push(this.prefixError + this.innerErrorMessage.invalid)
+
+    return this
+  }
+
+  static isFloat () {
     const schema = Joi.number()
 
     const { isNullOrUndefined, valid } = _verifyNullOrUndefined(this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)

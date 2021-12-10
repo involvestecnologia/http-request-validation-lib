@@ -19,6 +19,8 @@ const shouldReturnInvalidErrorWhenGivenObject = 'should return invalid error whe
 const shouldReturnInvalidErrorWhenGivenString = 'should return invalid error when given string'
 const shouldReturnMissingErrorWhenGivenNull = 'should return missing error when given null'
 const shouldReturnMissingErrorWhenGivenUndefined = 'should return missing error when given undefined'
+const shouldNotReturnErrorsWhenGiveNumber = 'should not return errors when given number'
+const shouldReturnInvalidErrorWhenGiveBoolean = 'should return invalid error when given boolean'
 
 describe('Validation tool test suite', function () {
   let errors = {}
@@ -50,7 +52,7 @@ describe('Validation tool test suite', function () {
       assert.equal(errors[0], INVALID_KEY)
     })
 
-    it('should return invalid error when given boolean', function () {
+    it(shouldReturnInvalidErrorWhenGiveBoolean, function () {
       const input = true
       Validation.validate(input, ERROR_MSGS, errors).isString()
       assert.equal(errors[0], INVALID_KEY)
@@ -112,10 +114,16 @@ describe('Validation tool test suite', function () {
   })
 
   describe('Number', function () {
-    it('should not return errors when given number', function () {
+    it(shouldNotReturnErrorsWhenGiveNumber, function () {
       const input = 1
       Validation.validate(input, ERROR_MSGS, errors).isNumber()
       assert.equal(errors.length, 0)
+    })
+
+    it('should return errors when given float', function () {
+      const input = 1.1
+      Validation.validate(input, ERROR_MSGS, errors).isNumber()
+      assert.equal(errors[0], INVALID_KEY)
     })
 
     it(shouldReturnInvalidErrorWhenGivenString, function () {
@@ -136,7 +144,7 @@ describe('Validation tool test suite', function () {
       assert.equal(errors[0], INVALID_KEY)
     })
 
-    it('should return invalid error when given boolean', function () {
+    it(shouldReturnInvalidErrorWhenGiveBoolean, function () {
       const input = true
       Validation.validate(input, ERROR_MSGS, errors).isNumber()
       assert.equal(errors[0], INVALID_KEY)
@@ -157,6 +165,62 @@ describe('Validation tool test suite', function () {
     it(shouldReturnMissingErrorWhenGivenUndefined, function () {
       const input = undefined
       Validation.validate(input, ERROR_MSGS, errors).isNumber()
+      assert.equal(errors[0], MISSING_KEY)
+    })
+  })
+
+  describe('Float', function () {
+    it('should not return errors when given float', function () {
+      const input = 1.1
+      Validation.validate(input, ERROR_MSGS, errors).isFloat()
+      assert.equal(errors.length, 0)
+    })
+
+    it(shouldNotReturnErrorsWhenGiveNumber, function () {
+      const input = 1
+      Validation.validate(input, ERROR_MSGS, errors).isFloat()
+      assert.equal(errors.length, 0)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenString, function () {
+      const input = '1'
+      Validation.validate(input, ERROR_MSGS, errors).isFloat()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenEmptyString, function () {
+      const input = ''
+      Validation.validate(input, ERROR_MSGS, errors).isFloat()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenRandomString, function () {
+      const input = 'foo bar'
+      Validation.validate(input, ERROR_MSGS, errors).isFloat()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGiveBoolean, function () {
+      const input = true
+      Validation.validate(input, ERROR_MSGS, errors).isFloat()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenObject, function () {
+      const input = {}
+      Validation.validate(input, ERROR_MSGS, errors).isFloat()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnMissingErrorWhenGivenNull, function () {
+      const input = null
+      Validation.validate(input, ERROR_MSGS, errors).isFloat()
+      assert.equal(errors[0], MISSING_KEY)
+    })
+
+    it(shouldReturnMissingErrorWhenGivenUndefined, function () {
+      const input = undefined
+      Validation.validate(input, ERROR_MSGS, errors).isFloat()
       assert.equal(errors[0], MISSING_KEY)
     })
   })
@@ -350,7 +414,7 @@ describe('Validation tool test suite', function () {
       assert.equal(errors.length, 0)
     })
 
-    it('should not return errors when given number', function () {
+    it(shouldNotReturnErrorsWhenGiveNumber, function () {
       const input = 1
       Validation.validate(input, ERROR_MSGS, errors).isObjectId()
       assert.equal(errors.length, 0)
