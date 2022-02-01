@@ -19,17 +19,17 @@ class Validation {
     return this
   }
 
-  static isString (minLegth, maxLength, notAllowedValues) {
+  static isString (minLength, maxLength, notAllowedValues) {
     let schema = {}
 
-    if (typeof minLegth === 'undefined' && typeof maxLength === 'undefined') {
+    if (typeof minLength === 'undefined' && typeof maxLength === 'undefined') {
       schema = Joi.string().allow('')
-    } else if (minLegth === 0) {
+    } else if (minLength === 0) {
       schema = Joi.string().allow('')
-        .min(minLegth)
+        .min(minLength)
         .max(maxLength)
     } else {
-      schema = Joi.string().min(minLegth)
+      schema = Joi.string().min(minLength)
         .max(maxLength)
     }
 
@@ -41,6 +41,21 @@ class Validation {
 
     if (Array.isArray(notAllowedValues) && notAllowedValues.indexOf(this.value) > -1) {
       this.errors.push(this.innerErrorMessage.invalid)
+    }
+
+    return this
+  }
+
+  static isStringEnum (enumArray) {
+    const schema = Joi.string()
+
+    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
+
+    if (!this.valid) return this
+
+    if (!enumArray.includes(this.value)) {
+      this.valid = false
+      this.errors.push(this.prefixError + this.innerErrorMessage.invalid)
     }
 
     return this

@@ -113,6 +113,58 @@ describe('Validation tool test suite', function () {
     })
   })
 
+  describe('String Enum', function () {
+    const enumArray = ['type1', 'type2']
+
+    it('should return not error', function () {
+      const input = 'type1'
+      Validation.validate(input, ERROR_MSGS, errors).isStringEnum(enumArray)
+      assert.equal(errors.length, 0)
+    })
+
+    it('should not return invalid key when given empty string', function () {
+      const input = ''
+      Validation.validate(input, ERROR_MSGS, errors).isStringEnum(enumArray)
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it('should not return invalid key when given string is not type', function () {
+      const input = 'type3'
+      Validation.validate(input, ERROR_MSGS, errors).isStringEnum(enumArray)
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenNumber, function () {
+      const input = 1
+      Validation.validate(input, ERROR_MSGS, errors).isStringEnum(enumArray)
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGiveBoolean, function () {
+      const input = true
+      Validation.validate(input, ERROR_MSGS, errors).isStringEnum(enumArray)
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenObject, function () {
+      const input = {}
+      Validation.validate(input, ERROR_MSGS, errors).isStringEnum(enumArray)
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnMissingErrorWhenGivenNull, function () {
+      const input = null
+      Validation.validate(input, ERROR_MSGS, errors).isStringEnum(enumArray)
+      assert.equal(errors[0], MISSING_KEY)
+    })
+
+    it(shouldReturnMissingErrorWhenGivenUndefined, function () {
+      const input = undefined
+      Validation.validate(input, ERROR_MSGS, errors).isStringEnum(enumArray)
+      assert.equal(errors[0], MISSING_KEY)
+    })
+  })
+
   describe('Number', function () {
     it(shouldNotReturnErrorsWhenGiveNumber, function () {
       const input = 1
