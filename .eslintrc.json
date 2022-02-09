@@ -31,7 +31,8 @@
         "no-underscore-dangle": "off",
         "no-magic-numbers": "off",
         "quote-props": ["error", "as-needed"],
-        "security/detect-non-literal-fs-filename": "off"
+        "security/detect-non-literal-fs-filename": "off",
+        "security/detect-non-literal-regexp": "off"
     },
     "noInlineConfig": true
 }

@@ -181,6 +181,26 @@ class Validation {
     return this
   }
 
+  static isArrayMatch (validArray) {
+    const { isNullOrUndefined, valid } = _verifyNullOrUndefined(this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
+
+    this.valid = valid
+
+    if (isNullOrUndefined) return this
+
+    const fieldRegex = new RegExp(`^(${validArray.join('|')})$`, 'u')
+
+    for (const field of this.value) {
+      if (!fieldRegex.test(field)) {
+        this.errors.push(this.prefixError + this.innerErrorMessage.invalid)
+        this.valid = false
+        break
+      }
+    }
+
+    return this
+  }
+
   static isArrayNotEmpty () {
     const schema = Joi.array()
 
