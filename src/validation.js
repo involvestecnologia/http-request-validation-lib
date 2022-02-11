@@ -190,7 +190,19 @@ class Validation {
 
     const fieldRegex = new RegExp(`^(${validArray.join('|')})$`, 'u')
 
-    for (const field of this.value) {
+    let arrayValue = this.value
+
+    if (!Array.isArray(arrayValue)) {
+      if (typeof arrayValue !== 'string') {
+        this.errors.push(this.prefixError + this.innerErrorMessage.invalid)
+        this.valid = false
+        return this
+      }
+
+      arrayValue = [arrayValue]
+    }
+
+    for (const field of arrayValue) {
       if (!fieldRegex.test(field)) {
         this.errors.push(this.prefixError + this.innerErrorMessage.invalid)
         this.valid = false

@@ -1,0 +1,3 @@
+# Coverage temp dir
+.nyc_output/
+coverage/

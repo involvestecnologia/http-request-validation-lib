@@ -707,6 +707,15 @@ describe('Validation tool test suite', function () {
       assert.equal(errors.length, 0)
     })
 
+    it('should not return errors when give string', function () {
+      const input = 'test'
+      const validArray = ['test']
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isArrayMatch(validArray)
+
+      assert.equal(errors.length, 0)
+    })
+
     it('should return not error when give valid', function () {
       const input = '[]'
       const validArray = ['test']
@@ -719,6 +728,16 @@ describe('Validation tool test suite', function () {
 
     it('should return error when give array with number', function () {
       const input = [1]
+      const validArray = ['test']
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isArrayMatch(validArray)
+
+      assert.equal(errors.length, 1)
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it('should return error when give number', function () {
+      const input = 1
       const validArray = ['test']
       Validation.validate(input, ERROR_MSGS, errors)
         .isArrayMatch(validArray)

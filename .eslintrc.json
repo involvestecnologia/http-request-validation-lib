@@ -32,7 +32,8 @@
         "no-magic-numbers": "off",
         "quote-props": ["error", "as-needed"],
         "security/detect-non-literal-fs-filename": "off",
-        "security/detect-non-literal-regexp": "off"
+        "security/detect-non-literal-regexp": "off",
+        "security/detect-object-injection": "off"
     },
     "noInlineConfig": true
 }
