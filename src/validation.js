@@ -51,7 +51,7 @@ class Validation {
 
     this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
-    if (!this.valid) return this
+    if (!this.valid || this.value === undefined) return this
 
     if (!enumArray.includes(this.value)) {
       this.valid = false

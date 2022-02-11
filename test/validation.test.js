@@ -122,6 +122,16 @@ describe('Validation tool test suite', function () {
       assert.equal(errors.length, 0)
     })
 
+    it('should return not error when is optional', function () {
+      const input = undefined
+      Validation
+        .validate(input, ERROR_MSGS, errors)
+        .isOptional()
+        .isStringEnum(enumArray)
+
+      assert.equal(errors.length, 0)
+    })
+
     it('should not return invalid key when given empty string', function () {
       const input = ''
       Validation.validate(input, ERROR_MSGS, errors).isStringEnum(enumArray)
