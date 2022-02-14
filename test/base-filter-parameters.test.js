@@ -16,11 +16,11 @@ describe('BaseFilterParameters Unit Tests', function () {
     parent = {}
     req = {
       query: {
-        _asc: '_id',
-        _desc: '_id',
-        _fields: 'type,name',
-        _limit: '10',
-        _offset: '10'
+        asc: '_id',
+        desc: '_id',
+        fields: 'type,name',
+        limit: '10',
+        offset: '10'
       }
     }
   })
@@ -39,8 +39,8 @@ describe('BaseFilterParameters Unit Tests', function () {
     assert.deepEqual(parameters.parent.sort, { _id: 1 })
   })
 
-  it('should return not error when missing _asc', function () {
-    delete req.query._asc
+  it('should return not error when missing asc', function () {
+    delete req.query.asc
 
     const parameters = BaseFilterParameters.new(parent, req)
     parameters.validate(fieldsValid, sortValid)
@@ -49,8 +49,8 @@ describe('BaseFilterParameters Unit Tests', function () {
     assert.deepEqual(parameters.parent.sort, { _id: -1 })
   })
 
-  it('should return error when _asc is invalid', function () {
-    req.query._asc = 'a'
+  it('should return error when asc is invalid', function () {
+    req.query.asc = 'a'
 
     const parameters = BaseFilterParameters.new(parent, req)
     parameters.validate(fieldsValid, sortValid)
@@ -58,9 +58,9 @@ describe('BaseFilterParameters Unit Tests', function () {
     assert.deepEqual(parent.errors, [constants.errors.asc.invalid])
   })
 
-  it('should return not error when missing _desc and _asc', function () {
-    delete req.query._asc
-    delete req.query._desc
+  it('should return not error when missing desc and asc', function () {
+    delete req.query.asc
+    delete req.query.desc
 
     const parameters = BaseFilterParameters.new(parent, req)
     parameters.validate(fieldsValid, sortValid)
@@ -69,8 +69,8 @@ describe('BaseFilterParameters Unit Tests', function () {
     assert.deepEqual(parameters.parent.sort, undefined)
   })
 
-  it('should return not error when missing _desc', function () {
-    delete req.query._desc
+  it('should return not error when missing desc', function () {
+    delete req.query.desc
 
     const parameters = BaseFilterParameters.new(parent, req)
     parameters.validate(fieldsValid, sortValid)
@@ -79,8 +79,8 @@ describe('BaseFilterParameters Unit Tests', function () {
     assert.deepEqual(parameters.parent.sort, { _id: 1 })
   })
 
-  it('should return error when _desc is invalid', function () {
-    req.query._desc = 'a'
+  it('should return error when desc is invalid', function () {
+    req.query.desc = 'a'
 
     const parameters = BaseFilterParameters.new(parent, req)
     parameters.validate(fieldsValid, sortValid)
@@ -88,8 +88,8 @@ describe('BaseFilterParameters Unit Tests', function () {
     assert.deepEqual(parent.errors, [constants.errors.desc.invalid])
   })
 
-  it('should return not error when missing _fields', function () {
-    delete req.query._fields
+  it('should return not error when missing fields', function () {
+    delete req.query.fields
 
     const parameters = BaseFilterParameters.new(parent, req)
     parameters.validate(fieldsValid, sortValid)
@@ -97,8 +97,8 @@ describe('BaseFilterParameters Unit Tests', function () {
     assert.deepEqual(parent.errors.length, 0)
   })
 
-  it('should return error when _fields is invalid', function () {
-    req.query._fields = '1'
+  it('should return error when fields is invalid', function () {
+    req.query.fields = '1'
 
     const parameters = BaseFilterParameters.new(parent, req)
     parameters.validate(fieldsValid, sortValid)
@@ -106,8 +106,8 @@ describe('BaseFilterParameters Unit Tests', function () {
     assert.deepEqual(parent.errors, [constants.errors.fields.invalid])
   })
 
-  it('should return not error when missing _limit', function () {
-    delete req.query._limit
+  it('should return not error when missing limit', function () {
+    delete req.query.limit
 
     const parameters = BaseFilterParameters.new(parent, req)
     parameters.validate(fieldsValid, sortValid)
@@ -115,8 +115,8 @@ describe('BaseFilterParameters Unit Tests', function () {
     assert.deepEqual(parent.errors.length, 0)
   })
 
-  it('should return error when _limit is invalid', function () {
-    req.query._limit = 'a'
+  it('should return error when limit is invalid', function () {
+    req.query.limit = 'a'
 
     const parameters = BaseFilterParameters.new(parent, req)
     parameters.validate(fieldsValid, sortValid)
@@ -124,8 +124,8 @@ describe('BaseFilterParameters Unit Tests', function () {
     assert.deepEqual(parent.errors, [constants.errors.limit.invalid])
   })
 
-  it('should return not error when missing _offset', function () {
-    delete req.query._offset
+  it('should return not error when missing offset', function () {
+    delete req.query.offset
 
     const parameters = BaseFilterParameters.new(parent, req)
     parameters.validate(fieldsValid, sortValid)
@@ -133,8 +133,8 @@ describe('BaseFilterParameters Unit Tests', function () {
     assert.deepEqual(parent.errors.length, 0)
   })
 
-  it('should return error when _offset is invalid', function () {
-    req.query._offset = 'a'
+  it('should return error when offset is invalid', function () {
+    req.query.offset = 'a'
 
     const parameters = BaseFilterParameters.new(parent, req)
     parameters.validate(fieldsValid, sortValid)

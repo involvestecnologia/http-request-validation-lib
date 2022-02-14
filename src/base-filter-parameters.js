@@ -6,11 +6,11 @@ class BaseFilterParameters {
   static new (parent, req) {
     parent.errors = []
 
-    parent.asc = req.query._asc
-    parent.desc = req.query._desc
-    parent.offset = req.query._offset && parseInt(req.query._offset, 10)
-    parent.limit = req.query._limit && parseInt(req.query._limit, 10)
-    parent.fields = _parseFields(req.query._fields)
+    parent.asc = req.query.asc
+    parent.desc = req.query.desc
+    parent.offset = req.query.offset && parseInt(req.query.offset, 10)
+    parent.limit = req.query.limit && parseInt(req.query.limit, 10)
+    parent.fields = _parseFields(req.query.fields)
     parent.sort = _parseSort(parent)
 
     this.parent = parent
