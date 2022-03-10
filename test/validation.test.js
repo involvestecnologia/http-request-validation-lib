@@ -805,6 +805,30 @@ describe('Validation tool test suite', function () {
       assert.equal(errors.length, 0)
     })
 
+    it('should not return errors when is optional', function () {
+      const input = undefined
+      let calledIsValid = false
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isOptional()
+        .isArrayNotEmpty()
+        .isValid(() => (calledIsValid = true))
+
+      assert.equal(errors.length, 0)
+      assert.equal(calledIsValid, false)
+    })
+
+    it('should not return errors and is valid', function () {
+      const input = [1]
+      let calledIsValid = false
+      Validation.validate(input, ERROR_MSGS, errors)
+        .isOptional()
+        .isArrayNotEmpty()
+        .isValid(() => (calledIsValid = true))
+
+      assert.equal(errors.length, 0)
+      assert.equal(calledIsValid, true)
+    })
+
     it('should return error when array is empty', function () {
       const input = []
       Validation.validate(input, ERROR_MSGS, errors)

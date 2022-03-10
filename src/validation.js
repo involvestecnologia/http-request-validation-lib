@@ -259,7 +259,7 @@ const _isEmptyObject = (object) => !Object.getOwnPropertySymbols(object).length 
 const _verifyNullOrUndefined = (optional, value, errors, innerErrorMessage, prefixError) => {
   const isNullOrUndefined = _isNullOrUndefined(value)
 
-  if (optional && isNullOrUndefined) return { isNullOrUndefined: true, valid: true }
+  if (optional && isNullOrUndefined) return { isNullOrUndefined: true, valid: false }
 
   if (!isNullOrUndefined) return { isNullOrUndefined: false, valid: true }
 
