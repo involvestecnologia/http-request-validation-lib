@@ -33,7 +33,10 @@
         "quote-props": ["error", "as-needed"],
         "security/detect-non-literal-fs-filename": "off",
         "security/detect-non-literal-regexp": "off",
-        "security/detect-object-injection": "off"
+        "security/detect-object-injection": "off",
+        "no-continue": "off",
+        "guard-for-in": "off",
+        "no-plusplus": "off"
     },
     "noInlineConfig": true
 }
