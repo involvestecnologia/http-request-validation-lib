@@ -391,55 +391,55 @@ describe('Validation tool test suite', function () {
     it('should return errors when given invalid format', function () {
       const input = 'PTX161H'
       Validation.validate(input, ERROR_MSGS, errors).isDateIS8601Duration()
-      assert.equal(errors[0], INVALID_KEY)
+      assert.deepEqual(errors, [INVALID_KEY])
     })
 
     it('should return errors when given date ISO', function () {
       const input = new Date().toISOString()
       Validation.validate(input, ERROR_MSGS, errors).isDateIS8601Duration()
-      assert.equal(errors[0], INVALID_KEY)
+      assert.deepEqual(errors, [INVALID_KEY])
     })
 
     it('should return errors when given date', function () {
       const input = new Date().toString()
       Validation.validate(input, ERROR_MSGS, errors).isDateIS8601Duration()
-      assert.equal(errors[0], INVALID_KEY)
+      assert.deepEqual(errors, [INVALID_KEY])
     })
 
     it(shouldReturnInvalidErrorWhenGivenNumber, function () {
       const input = 1
       Validation.validate(input, ERROR_MSGS, errors).isDateIS8601Duration()
-      assert.equal(errors[0], INVALID_KEY)
+      assert.deepEqual(errors, [INVALID_KEY])
     })
 
     it(shouldReturnInvalidErrorWhenGivenString, function () {
       const input = '1'
       Validation.validate(input, ERROR_MSGS, errors).isDateIS8601Duration()
-      assert.equal(errors[0], INVALID_KEY)
+      assert.deepEqual(errors, [INVALID_KEY])
     })
 
     it(shouldReturnInvalidErrorWhenGivenEmptyString, function () {
       const input = ''
       Validation.validate(input, ERROR_MSGS, errors).isDateIS8601Duration()
-      assert.equal(errors[0], INVALID_KEY)
+      assert.deepEqual(errors, [INVALID_KEY])
     })
 
     it(shouldReturnInvalidErrorWhenGivenObject, function () {
       const input = {}
       Validation.validate(input, ERROR_MSGS, errors).isDateIS8601Duration()
-      assert.equal(errors[0], INVALID_KEY)
+      assert.deepEqual(errors, [INVALID_KEY])
     })
 
     it(shouldReturnMissingErrorWhenGivenNull, function () {
       const input = null
       Validation.validate(input, ERROR_MSGS, errors).isDateIS8601Duration()
-      assert.equal(errors[0], MISSING_KEY)
+      assert.deepEqual(errors, [MISSING_KEY])
     })
 
     it(shouldReturnMissingErrorWhenGivenUndefined, function () {
       const input = undefined
       Validation.validate(input, ERROR_MSGS, errors).isDateIS8601Duration()
-      assert.equal(errors[0], MISSING_KEY)
+      assert.deepEqual(errors, [MISSING_KEY])
     })
   })
 

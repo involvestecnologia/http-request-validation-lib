@@ -108,7 +108,7 @@ class Validation {
     const schema = Joi.string()
     const valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
-    this.valid = valid
+    if (!valid) return this
 
     try {
       tinyduration.parse(this.value)
