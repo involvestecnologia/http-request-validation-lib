@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { ObjectID } = require('mongodb')
+const tinyduration = require('tinyduration')
 
 class Validation {
   static validate (value, innerErrorMessage, errors, prefixError = '') {
@@ -101,6 +102,22 @@ class Validation {
     _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
     return this
+  }
+
+  static isDateIS8601Duration () {
+    const schema = Joi.string()
+    const valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
+
+    this.valid = valid
+
+    try {
+      tinyduration.parse(this.value)
+      return this
+    } catch (error) {
+      this.errors.push(this.prefixError + this.innerErrorMessage.invalid)
+      this.valid = false
+      return this
+    }
   }
 
   static isBoolean () {

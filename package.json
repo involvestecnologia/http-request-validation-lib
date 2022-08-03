@@ -16,7 +16,8 @@
   "license": "ISC",
   "dependencies": {
     "joi": "^17.4.0",
-    "mongodb": "^3.6.10"
+    "mongodb": "^3.6.10",
+    "tinyduration": "^3.2.2"
   },
   "devDependencies": {
     "eslint": "^7.30.0",
