@@ -106,9 +106,9 @@ class Validation {
 
   static isDateIS8601Duration () {
     const schema = Joi.string()
-    const valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
+    this.valid = _validation(schema, this.optional, this.value, this.errors, this.innerErrorMessage, this.prefixError)
 
-    if (!valid) return this
+    if (!this.valid) return this
 
     try {
       tinyduration.parse(this.value)
