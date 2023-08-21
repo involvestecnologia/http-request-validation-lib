@@ -1,6 +1,6 @@
 {
   "name": "@involvestecnologia/http-request-validation2-lib",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "description": "Tool to validate your http requests",
   "main": "index.js",
   "scripts": {
