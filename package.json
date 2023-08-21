@@ -1,5 +1,5 @@
 {
-  "name": "@involves/http-request-validation2-lib",
+  "name": "@involvestecnologia/http-request-validation2-lib",
   "version": "0.0.28",
   "description": "Tool to validate your http requests",
   "main": "index.js",
@@ -12,6 +12,13 @@
     "validation",
     "joi"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/involvestecnologia/http-request-validation2-lib.git"
+  },
   "author": "Morelli",
   "license": "ISC",
   "dependencies": {
